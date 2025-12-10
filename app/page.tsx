@@ -246,8 +246,7 @@ export default function Home() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
           >
-            Advanced AI training protocols merged with intuitive design. 
-            Create your personalized model in minutes.
+            Create your personalized AI model in minutes, ready to generate avatars in seconds.
           </motion.p>
         </motion.header>
 
@@ -536,6 +535,27 @@ export default function Home() {
             </motion.div>
           )}
         </AnimatePresence>
+
+        {/* Powered by fal.ai badge */}
+        <motion.div 
+          className="fixed bottom-4 right-4 z-40"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1 }}
+        >
+          <a
+            href="https://fal.ai/models/fal-ai/z-image/turbo/lora"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm hover:bg-white/10 hover:border-aura-cyan-glow/50 transition-all group"
+          >
+            <span className="text-xs text-white/50 group-hover:text-white/70 transition-colors">Powered by</span>
+            <span className="text-xs font-semibold text-aura-cyan-bright">fal.ai</span>
+            <svg className="w-3 h-3 text-white/30 group-hover:text-white/50 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+          </a>
+        </motion.div>
       </div>
     </main>
   )
