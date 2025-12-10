@@ -4,13 +4,13 @@
 
 @layer base {
   :root {
-    --gradient-start: #3b82f6;
-    --gradient-mid: #06b6d4;
-    --gradient-end: #6366f1;
+    --gradient-start: #10b981;
+    --gradient-mid: #f59e0b;
+    --gradient-end: #34d399;
   }
 
   body {
-    @apply bg-midnight text-white antialiased selection:bg-aura-cyan-glow/30;
+    @apply bg-midnight text-white antialiased selection:bg-aura-emerald-glow/30;
   }
 
   /* Custom scrollbar */
@@ -38,7 +38,7 @@
     @apply relative overflow-hidden rounded-2xl border border-white/5 bg-obsidian/40 backdrop-blur-xl;
     box-shadow: 
       0 0 0 1px rgba(255, 255, 255, 0.03) inset,
-      0 0 40px rgba(6, 182, 212, 0.05);
+      0 0 40px rgba(16, 185, 129, 0.05);
   }
 
   .glass-card::before {
@@ -46,7 +46,7 @@
     @apply absolute inset-0 -z-10 opacity-0 transition-opacity duration-500;
     background: radial-gradient(
       800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-      rgba(6, 182, 212, 0.06),
+      rgba(16, 185, 129, 0.06),
       transparent 40%
     );
   }
@@ -57,16 +57,16 @@
 
   /* Aura Button */
   .glow-button {
-    @apply relative overflow-hidden rounded-full bg-gradient-to-r from-aura-blue-glow to-aura-cyan-glow px-8 py-3 font-semibold text-white transition-all duration-300;
+    @apply relative overflow-hidden rounded-full bg-gradient-to-r from-aura-emerald-glow to-aura-emerald-bright px-8 py-3 font-semibold text-white transition-all duration-300;
     box-shadow: 
-      0 0 20px rgba(6, 182, 212, 0.3),
+      0 0 20px rgba(16, 185, 129, 0.3),
       inset 0 1px 0 rgba(255, 255, 255, 0.2);
   }
 
   .glow-button:hover {
     @apply scale-[1.02];
     box-shadow: 
-      0 0 30px rgba(6, 182, 212, 0.5),
+      0 0 30px rgba(16, 185, 129, 0.5),
       inset 0 1px 0 rgba(255, 255, 255, 0.3);
   }
 
@@ -83,16 +83,63 @@
     animation: shimmer 3s infinite;
   }
 
-  /* Gradient text */
+  /* Vibrant CTA Button - Orange/Coral with glassmorphism */
+  .glow-button-cta {
+    @apply relative overflow-hidden rounded-full px-10 py-4 font-bold text-white transition-all duration-300;
+    background: linear-gradient(135deg, rgba(251, 146, 60, 0.95) 0%, rgba(249, 115, 22, 1) 50%, rgba(234, 88, 12, 1) 100%);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 
+      0 0 40px rgba(251, 146, 60, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.4),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.1),
+      0 10px 40px rgba(0, 0, 0, 0.3);
+  }
+
+  .glow-button-cta:hover {
+    @apply scale-[1.03];
+    box-shadow: 
+      0 0 60px rgba(251, 146, 60, 0.6),
+      inset 0 1px 0 rgba(255, 255, 255, 0.5),
+      0 15px 50px rgba(0, 0, 0, 0.4);
+  }
+
+  .glow-button-cta::before {
+    content: '';
+    @apply absolute inset-0 rounded-full;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .glow-button-cta::after {
+    content: '';
+    @apply absolute inset-0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transform: translateX(-100%) skewX(-15deg);
+    animation: shimmer-cta 4s infinite;
+  }
+
+  @keyframes shimmer-cta {
+    0% { transform: translateX(-100%) skewX(-15deg); }
+    50%, 100% { transform: translateX(200%) skewX(-15deg); }
+  }
+
+  /* Gradient text with glow */
   .gradient-text {
-    @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, #fff 30%, #38bdf8 100%);
-    text-shadow: 0 0 30px rgba(56, 189, 248, 0.3);
+    @apply bg-clip-text text-transparent relative;
+    background-image: linear-gradient(135deg, #fff 0%, #34d399 50%, #fbbf24 100%);
   }
   
   .gradient-text-alt {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+    background-image: linear-gradient(135deg, #10b981 0%, #f59e0b 100%);
+  }
+  
+  /* Glowing headline effect */
+  .glow-headline {
+    text-shadow: 
+      0 0 40px rgba(52, 211, 153, 0.4),
+      0 0 80px rgba(52, 211, 153, 0.2),
+      0 0 120px rgba(245, 158, 11, 0.1);
   }
 
   /* Upload zone */
@@ -101,12 +148,12 @@
   }
 
   .upload-zone:hover {
-    @apply border-aura-cyan-glow/30 bg-white/[0.04];
-    box-shadow: 0 0 30px rgba(6, 182, 212, 0.05);
+    @apply border-aura-emerald-glow/30 bg-white/[0.04];
+    box-shadow: 0 0 30px rgba(16, 185, 129, 0.05);
   }
 
   .upload-zone.drag-over {
-    @apply border-aura-cyan-glow bg-aura-cyan-glow/5 scale-[1.01];
+    @apply border-aura-emerald-glow bg-aura-emerald-glow/5 scale-[1.01];
   }
 
   /* Progress ring */
@@ -120,10 +167,10 @@
   }
 
   .image-card:hover {
-    @apply scale-[1.02] z-10 border-aura-cyan-glow/50;
+    @apply scale-[1.02] z-10 border-aura-emerald-glow/50;
     box-shadow: 
       0 20px 40px rgba(0, 0, 0, 0.4), 
-      0 0 30px rgba(6, 182, 212, 0.2);
+      0 0 30px rgba(16, 185, 129, 0.2);
   }
 
   .image-card::after {
@@ -142,8 +189,8 @@
   }
 
   .input-field:focus {
-    @apply border-aura-cyan-glow/50 bg-black/40 ring-1 ring-aura-cyan-glow/20;
-    box-shadow: 0 0 20px rgba(6, 182, 212, 0.1);
+    @apply border-aura-emerald-glow/50 bg-black/40 ring-1 ring-aura-emerald-glow/20;
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.1);
   }
 
   /* Select styling */
@@ -156,7 +203,7 @@
   }
 
   .select-field:focus {
-    @apply border-aura-cyan-glow/50 bg-black/40 ring-1 ring-aura-cyan-glow/20;
+    @apply border-aura-emerald-glow/50 bg-black/40 ring-1 ring-aura-emerald-glow/20;
   }
 }
 
@@ -164,16 +211,16 @@
   /* Mesh gradient background */
   .mesh-gradient {
     background: 
-      radial-gradient(at 0% 0%, rgba(23, 37, 84, 0.5) 0px, transparent 50%),
-      radial-gradient(at 100% 0%, rgba(6, 182, 212, 0.15) 0px, transparent 50%),
-      radial-gradient(at 100% 100%, rgba(59, 130, 246, 0.2) 0px, transparent 50%),
-      radial-gradient(at 0% 100%, rgba(2, 6, 23, 1) 0px, transparent 50%);
+      radial-gradient(at 0% 0%, rgba(6, 78, 59, 0.5) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, rgba(16, 185, 129, 0.15) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, rgba(245, 158, 11, 0.15) 0px, transparent 50%),
+      radial-gradient(at 0% 100%, rgba(10, 15, 13, 1) 0px, transparent 50%);
   }
 
   /* Dot Grid Pattern */
   .dot-grid {
     background-image: 
-      radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+      radial-gradient(rgba(16, 185, 129, 0.15) 1px, transparent 1px);
     background-size: 30px 30px;
     mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
   }

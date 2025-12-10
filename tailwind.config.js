@@ -8,26 +8,44 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['var(--font-outfit)', 'system-ui', 'sans-serif'],
-        display: ['var(--font-playfair)', 'Georgia', 'serif'],
+        sans: ['var(--font-sora)', 'system-ui', 'sans-serif'],
+        display: ['var(--font-syne)', 'system-ui', 'sans-serif'],
       },
       colors: {
-        midnight: '#020617', // darker slate-950
-        obsidian: '#0f172a', // slate-900
-        slate: '#1e293b',    // slate-800
-        'aura-blue': {
-          dim: '#172554',
-          glow: '#3b82f6',
-          bright: '#60a5fa',
+        // Dark base
+        midnight: '#0a0f0d',
+        obsidian: '#0d1512',
+        slate: '#1a2420',
+        // Primary - Emerald
+        'aura-emerald': {
+          dim: '#064e3b',
+          glow: '#10b981',
+          bright: '#34d399',
+          light: '#6ee7b7',
         },
+        // Secondary - Gold/Amber
+        'aura-gold': {
+          dim: '#78350f',
+          glow: '#f59e0b',
+          bright: '#fbbf24',
+          light: '#fcd34d',
+        },
+        // Accent - Warm tones
+        'aura-warm': {
+          coral: '#f97316',
+          rose: '#fb7185',
+          sand: '#d4a574',
+        },
+        // Legacy aliases for compatibility
         'aura-cyan': {
-          dim: '#155e75',
-          glow: '#06b6d4',
-          bright: '#22d3ee',
+          dim: '#064e3b',
+          glow: '#10b981',
+          bright: '#34d399',
         },
-        violet: {
-          glow: '#8b5cf6',
-          deep: '#6d28d9',
+        'aura-blue': {
+          dim: '#064e3b',
+          glow: '#10b981',
+          bright: '#34d399',
         },
       },
       animation: {
@@ -76,8 +94,8 @@ module.exports = {
           '50%': { transform: 'translateY(-20px)' }
         },
         'glow': {
-          '0%': { 'box-shadow': '0 0 20px rgba(6, 182, 212, 0.3)' },
-          '100%': { 'box-shadow': '0 0 40px rgba(6, 182, 212, 0.6)' }
+          '0%': { 'box-shadow': '0 0 20px rgba(16, 185, 129, 0.3)' },
+          '100%': { 'box-shadow': '0 0 40px rgba(16, 185, 129, 0.6)' }
         },
         'shimmer': {
           '0%': { 'background-position': '-200% 0' },

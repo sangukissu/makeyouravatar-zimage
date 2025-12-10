@@ -3,6 +3,21 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
+import { 
+  Rocket, 
+  Shield, 
+  Palmtree, 
+  Landmark, 
+  Cpu, 
+  Wand2, 
+  Palette, 
+  Briefcase, 
+  Film, 
+  Skull, 
+  Crown, 
+  Sword,
+  type LucideIcon
+} from 'lucide-react'
 
 interface GenerateFormProps {
   loraUrl: string
@@ -24,7 +39,8 @@ interface PresetStyle {
   id: string
   name: string
   prompt: string
-  icon: string
+  icon: LucideIcon
+  color: string
   generatedImage?: string
   isLoading?: boolean
 }
@@ -34,73 +50,85 @@ const getPresetStyles = (trigger: string): PresetStyle[] => [
     id: 'astronaut',
     name: 'Astronaut',
     prompt: `${trigger} as an astronaut floating in space with Earth in the background, cinematic lighting, high quality`,
-    icon: '🚀',
+    icon: Rocket,
+    color: 'text-blue-400',
   },
   {
-    id: 'superhero',
-    name: 'Superhero',
-    prompt: `${trigger} as a powerful superhero with a cape, dynamic action pose, comic book style, high quality`,
-    icon: '🦸',
+    id: 'warrior',
+    name: 'Warrior',
+    prompt: `${trigger} as a powerful warrior in ancient armor, epic battle pose, cinematic fantasy style, high quality`,
+    icon: Shield,
+    color: 'text-amber-400',
   },
   {
     id: 'holiday',
     name: 'Holiday Vibes',
     prompt: `${trigger} relaxing on a tropical beach at sunset, vacation mood, golden hour lighting, high quality`,
-    icon: '🏖️',
+    icon: Palmtree,
+    color: 'text-emerald-400',
   },
   {
     id: 'eiffel',
     name: 'Paris',
     prompt: `${trigger} standing in front of the Eiffel Tower in Paris, elegant portrait, romantic atmosphere, high quality`,
-    icon: '🗼',
+    icon: Landmark,
+    color: 'text-rose-400',
   },
   {
     id: 'cyberpunk',
     name: 'Cyberpunk',
     prompt: `${trigger} in a neon-lit cyberpunk city at night, futuristic style, rain reflections, high quality`,
-    icon: '🌃',
+    icon: Cpu,
+    color: 'text-cyan-400',
   },
   {
     id: 'wizard',
     name: 'Fantasy Wizard',
     prompt: `${trigger} as a powerful wizard casting magical spells, fantasy art style, mystical aura, high quality`,
-    icon: '🧙',
+    icon: Wand2,
+    color: 'text-purple-400',
   },
   {
     id: 'anime',
     name: 'Anime Style',
     prompt: `${trigger} in anime art style, vibrant colors, detailed illustration, Studio Ghibli inspired, high quality`,
-    icon: '🎨',
+    icon: Palette,
+    color: 'text-pink-400',
   },
   {
     id: 'corporate',
     name: 'Professional',
     prompt: `${trigger} in professional business attire, corporate headshot, studio lighting, LinkedIn photo, high quality`,
-    icon: '💼',
+    icon: Briefcase,
+    color: 'text-slate-300',
   },
   {
     id: 'vintage',
     name: 'Vintage 1920s',
     prompt: `${trigger} in 1920s vintage style, sepia toned, classic Hollywood glamour, high quality`,
-    icon: '🎬',
+    icon: Film,
+    color: 'text-amber-400',
   },
   {
     id: 'pirate',
     name: 'Pirate Captain',
     prompt: `${trigger} as a pirate captain on a ship deck, dramatic ocean backdrop, adventure style, high quality`,
-    icon: '🏴‍☠️',
+    icon: Skull,
+    color: 'text-stone-300',
   },
   {
     id: 'royal',
     name: 'Royal Portrait',
     prompt: `${trigger} as royalty in a renaissance oil painting style, ornate palace background, regal, high quality`,
-    icon: '👑',
+    icon: Crown,
+    color: 'text-yellow-300',
   },
   {
     id: 'samurai',
     name: 'Samurai Warrior',
     prompt: `${trigger} as a samurai warrior in traditional armor, cherry blossoms, Japanese art style, high quality`,
-    icon: '⚔️',
+    icon: Sword,
+    color: 'text-red-400',
   },
 ]
 
@@ -398,8 +426,8 @@ export default function GenerateForm({
                     <p className="text-[10px] text-aura-cyan-bright">Generating...</p>
                   </div>
                 ) : (
-                  <div className="text-center opacity-30">
-                    <div className="text-2xl mb-1">{preset.icon}</div>
+                  <div className="text-center opacity-40">
+                    <preset.icon className={`w-8 h-8 mx-auto mb-1 ${preset.color}`} />
                     <p className="text-[10px] text-white/50">Waiting...</p>
                   </div>
                 )}

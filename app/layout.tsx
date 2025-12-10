@@ -1,15 +1,17 @@
 import type { Metadata } from 'next'
-import { Outfit, Playfair_Display } from 'next/font/google'
+import { Sora, Syne } from 'next/font/google'
 import './globals.css'
 
-const outfit = Outfit({
+const sora = Sora({
   subsets: ['latin'],
-  variable: '--font-outfit',
+  variable: '--font-sora',
+  weight: ['300', '400', '500', '600', '700'],
 })
 
-const playfair = Playfair_Display({
+const syne = Syne({
   subsets: ['latin'],
-  variable: '--font-playfair',
+  variable: '--font-syne',
+  weight: ['400', '500', '600', '700', '800'],
 })
 
 export const metadata: Metadata = {
@@ -23,8 +25,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${outfit.variable} ${playfair.variable}`}>
-      <body className="min-h-screen overflow-x-hidden font-sans">
+    <html lang="en" className={`${sora.variable} ${syne.variable}`}>
+      <body className="min-h-screen overflow-x-hidden font-sans antialiased">
         {children}
       </body>
     </html>

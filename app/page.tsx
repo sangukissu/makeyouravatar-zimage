@@ -3,7 +3,9 @@
 import { useState, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import JSZip from 'jszip'
+import { Home as HomeIcon } from 'lucide-react'
 import AnimatedBackground from '@/components/AnimatedBackground'
+import LandingPage from '@/components/LandingPage'
 import UploadZone from '@/components/UploadZone'
 import TrainingProgress from '@/components/TrainingProgress'
 import GenerateForm, { type GeneratedImage } from '@/components/GenerateForm'
@@ -11,7 +13,7 @@ import LoraManager from '@/components/LoraManager'
 import { saveLora, type StoredLora } from '@/lib/storage'
 
 // Step definitions
-type Step = 'upload' | 'configure' | 'training' | 'generate'
+type Step = 'landing' | 'upload' | 'configure' | 'training' | 'generate'
 
 interface UploadedImage {
   id: string
@@ -20,8 +22,8 @@ interface UploadedImage {
 }
 
 export default function Home() {
-  // Step state
-  const [currentStep, setCurrentStep] = useState<Step>('upload')
+  // Step state - Start with landing page
+  const [currentStep, setCurrentStep] = useState<Step>('landing')
   
   // Upload state
   const [images, setImages] = useState<UploadedImage[]>([])
@@ -151,13 +153,13 @@ export default function Home() {
     setGeneratedImages([...newImages, ...generatedImages])
   }
 
-  // Step indicator component
+  // Step indicator component (only for app flow, not landing)
   const StepIndicator = () => {
-    const steps: { key: Step; label: string; icon: JSX.Element }[] = [
+    const flowSteps: { key: Step; label: string; icon: JSX.Element }[] = [
       { 
         key: 'upload', 
         label: 'Upload',
-        icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2 2v12a2 2 0 002 2z" />
       },
       { 
         key: 'configure', 
@@ -176,28 +178,41 @@ export default function Home() {
       },
     ]
     
-    const currentIndex = steps.findIndex(s => s.key === currentStep)
+    const currentIndex = flowSteps.findIndex(s => s.key === currentStep)
+    
+    // Handle step navigation
+    const handleStepClick = (stepKey: Step) => {
+      // Only allow navigation to past steps or current step
+      const stepIndex = flowSteps.findIndex(s => s.key === stepKey)
+      if (stepIndex <= currentIndex) {
+        setCurrentStep(stepKey)
+      }
+    }
     
     return (
       <div className="flex items-center justify-center gap-2 mb-8">
-        {steps.map((step, index) => {
+        {flowSteps.map((step, index) => {
           const isActive = step.key === currentStep
           const isPast = index < currentIndex
+          const isClickable = index <= currentIndex
           
           return (
             <div key={step.key} className="flex items-center">
               <motion.div
                 className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all border ${
                   isActive 
-                    ? 'bg-aura-cyan-glow/10 border-aura-cyan-glow text-aura-cyan-bright' 
+                    ? 'bg-aura-emerald-glow/10 border-aura-emerald-glow text-aura-emerald-bright' 
                     : isPast
-                    ? 'bg-aura-blue-dim/20 border-aura-blue-dim text-white/70'
+                    ? 'bg-aura-emerald-dim/20 border-aura-emerald-dim text-white/70'
                     : 'bg-white/5 border-transparent text-white/30'
-                }`}
+                } ${isClickable ? 'cursor-pointer hover:scale-105' : 'cursor-not-allowed'}`}
                 animate={{ scale: isActive ? 1.05 : 1 }}
+                onClick={() => isClickable && handleStepClick(step.key)}
+                whileHover={isClickable ? { scale: 1.05 } : {}}
+                whileTap={isClickable ? { scale: 0.98 } : {}}
               >
                 <svg 
-                  className={`w-4 h-4 ${isActive ? 'text-aura-cyan-bright' : isPast ? 'text-white/70' : 'text-white/30'}`} 
+                  className={`w-4 h-4 ${isActive ? 'text-aura-emerald-bright' : isPast ? 'text-white/70' : 'text-white/30'}`} 
                   fill="none" 
                   viewBox="0 0 24 24" 
                   stroke="currentColor"
@@ -209,8 +224,8 @@ export default function Home() {
                 </span>
               </motion.div>
               
-              {index < steps.length - 1 && (
-                <div className={`w-8 h-[1px] mx-1 ${isPast ? 'bg-aura-blue-glow' : 'bg-white/10'}`} />
+              {index < flowSteps.length - 1 && (
+                <div className={`w-8 h-[1px] mx-1 ${isPast ? 'bg-aura-emerald-glow' : 'bg-white/10'}`} />
               )}
             </div>
           )
@@ -223,30 +238,49 @@ export default function Home() {
     <main className="min-h-screen relative font-sans">
       <AnimatedBackground />
       
+      {/* Landing Page */}
+      {currentStep === 'landing' && (
+        <div className="relative z-10">
+          <LandingPage onGetStarted={() => setCurrentStep('upload')} />
+        </div>
+      )}
+
+      {/* App Flow */}
+      {currentStep !== 'landing' && (
       <div className="relative z-10 container mx-auto px-4 py-8 max-w-4xl">
-        {/* Header */}
+        {/* Header with Home Button */}
         <motion.header
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-16 pt-8"
+          className="text-center mb-10 pt-4 relative"
         >
+          {/* Home Button */}
+          <motion.button
+            onClick={() => setCurrentStep('landing')}
+            className="absolute left-0 top-4 flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-aura-emerald-glow/50 transition-all text-white/70 hover:text-white"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <HomeIcon className="w-4 h-4" />
+            <span className="text-sm font-medium hidden sm:inline">Home</span>
+          </motion.button>
+
           <motion.h1 
-            className="text-5xl md:text-7xl font-bold font-display mb-6 tracking-tight leading-tight"
+            className="text-3xl md:text-4xl font-bold font-display mb-2"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
           >
-            Architect your <span className="gradient-text italic pr-2">digital self</span> <br />
-            with absolute precision.
+            <span className="gradient-text">Make Your Avatar</span>
           </motion.h1>
           
           <motion.p
-            className="text-lg text-white/60 max-w-xl mx-auto font-light leading-relaxed"
+            className="text-sm text-white/50"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
           >
-            Create your personalized AI model in minutes, ready to generate avatars in seconds.
+            Train your personal AI model in minutes
           </motion.p>
         </motion.header>
 
@@ -557,6 +591,30 @@ export default function Home() {
           </a>
         </motion.div>
       </div>
+      )}
+
+      {/* Powered by badge on landing too */}
+      {currentStep === 'landing' && (
+        <motion.div 
+          className="fixed bottom-4 right-4 z-40"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 3 }}
+        >
+          <a
+            href="https://fal.ai/models/fal-ai/z-image/turbo/lora"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm hover:bg-white/10 hover:border-aura-cyan-glow/50 transition-all group"
+          >
+            <span className="text-xs text-white/50 group-hover:text-white/70 transition-colors">Powered by</span>
+            <span className="text-xs font-semibold text-aura-cyan-bright">fal.ai</span>
+            <svg className="w-3 h-3 text-white/30 group-hover:text-white/50 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+          </a>
+        </motion.div>
+      )}
     </main>
   )
 }
