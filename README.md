@@ -4,6 +4,8 @@ Train a personalized AI model with your photos and create stunning avatars in an
 
 [![Powered by fal.ai](https://img.shields.io/badge/Powered%20by-fal.ai-06b6d4?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTMgMTBWM0w0IDE0aDd2N2w5LTExaC03eiIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48L3N2Zz4=)](https://fal.ai/models/fal-ai/z-image/turbo/lora)
 
+![Screenshot](screenshot.jpeg)
+
 ## Features
 
 - **Upload Photos**: Drag & drop 5+ photos of yourself
