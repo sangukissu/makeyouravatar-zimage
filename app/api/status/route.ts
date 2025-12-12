@@ -33,17 +33,16 @@ export async function GET(request: NextRequest) {
           loraUrl: result.data.diffusers_lora_file?.url,
           configUrl: result.data.config_file?.url,
         },
-        // Cast to any to safely access logs on the completed union type
         logs: (status as any).logs || [],
       })
     }
 
     return NextResponse.json({
       status: status.status,
-      // FIX: Cast status to 'any' here to bypass the TS error
-      // regarding 'logs' missing on 'InQueueQueueStatus'
+      // FIX 1: Handle logs (exists on InProgress, missing on InQueue)
       logs: (status as any).logs || [],
-      queuePosition: status.queue_position,
+      // FIX 2: Handle queuePosition (exists on InQueue, missing on InProgress)
+      queuePosition: (status as any).queue_position || 0,
     })
   } catch (error) {
     console.error('Status check error:', error)
